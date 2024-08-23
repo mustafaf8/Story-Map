@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Map</title>
+    <link rel="stylesheet" href="story.css">
+
+</head>
+<body>
+    <header>
+        <div class="header">
+            <div class="logo">
+                <img src="assets/image.png" title="logo" alt="logo">
+            </div>
+            <div class="navbar">
+                <ul>
+                    <li><a href="home.html">HOME</a></li>
+                    <li><a href="storyMap.html">STORY MAP</a></li>
+                    <li><a href="index.html">INTRO</a></li>
+                </ul>
+            </div>
+            <button class="hamburger" id="hamburger-btn">&#9776;</button> <!-- Hamburger Menüsü Butonu -->
+        </div>
+        
+    </header>   
+     <div class="container">
+        <div class="map">
+            <img src="assets/i-converted-gta-v-map-to-svg-format-v0-4a8jtblowk1b1.webp" alt="map">
+            
+            <div id="dot-container" class="dot-container"></div>
+
+        </div>
+        <div class="storys">
+            <h2>STORYS</h2>
+            <div id="story-content">Haritadan hikaye seçebilirsin.</div>
+            <div class="animations">
+                <p>Animasyonlar yakında eklenecek..</p>
+            </div>
+        </div>
+     </div>
+     <script>
+        const container = document.getElementById('dot-container');
+        const storyContent = document.getElementById('story-content');
+        const animationsDiv = document.querySelector('.animations');
+
+        const stories = [
+            "Prologue: 2004 yılında, North Yankton’daki Ludendorff kasabasında, Michael, Trevor ve Brad’le birlikte büyük bir banka soygunu planladık. Karanlık bir sabahın erken saatlerinde, bankanın önüne geldik. Michael, bankaya gizlice girip güvenlik görevlilerini etkisiz hale getirdi ve kasayı patlatmak için C4’ü kurdu. İçerideki patlama her şeyi sarstı; para dolu çantaları toplarken, Brad panikledi ve polislerin geldiğini fark etti. Çatışma anında, polislerin ağır silahları karşısında Michael ve ben, dar bir sokağa kaçarak kaçmaya başladık. Brad ağır yaralandı ve ne yazık ki onu terk etmek zorunda kaldık. Michael, saklanmak için tanık koruma programına girerken, ben çölde bir çöl fırtınası gibi kaybolup gitmiştim.",
+            "Franklin and Lamar: Los Santos’un sokaklarında, Franklin ve ben, Lamar’ın borç yüzünden repo etmemiz gereken arabayı almak için yola çıktık. Garajın kapısını açtık ve içerideki uyuşturucu çetesiyle karşılaştık. Araba, garajın arka köşesinde park edilmişti ama çeteyle yüzleşmek zorundaydık. Lamar, motoru çalıştırıp dikkatleri üzerimize çekti. İçeriye girerken, çetenin lideri ve adamlarıyla kısa bir çatışma yaşadık. Aracı alıp kaçmaya başladığımızda, polis sirenleri hızla yaklaşıyordu. Franklin, dar sokaklarda sürüş becerilerini konuşturdu; virajlar ve engeller arasında ustaca manevralar yaparak bizi güvenli bir şekilde kurtardı. Polisleri sallarak, aracı başarılı bir şekilde sahibine teslim ettik.",
+            "Repossession: Franklin ve ben, bir çetenin kontrolündeki apartmana gitmek zorundaydık. İçeride bir uyuşturucu operasyonu dönüyordu ve aracı geri almak için dikkatli hareket etmemiz gerekiyordu. Apartmanın içine gizlice girdik ama çetenin üyeleri bizi fark etti ve çatışma başladı. Aracın yanına gidebilmek için çatışmanın ortasında kaldık, kurşunların ve patlamaların arasında mücadele ettik. Franklin, çetenin saldırılarına karşı beni korurken, aracı hızlıca alıp dışarı çıkmamız gerekiyordu. Sonunda, araçla kaçmayı başardık ve sahibine teslim ettik. Bu görev, Franklin’in suç dünyasındaki rolünü ve güvenilirliğini pekiştirdi.",
+            "The Long Stretch: Stretch, hapisten yeni çıkmış bir suçluydu ve Los Santos’a döner dönmez bizimle iş yapmaya başladı. Franklin ve ben, onunla birlikte uyuşturucu paketini bir apartmandan almak için yola çıktık. Apartmanın içine girdiğimizde, çetenin üyeleriyle karşılaştık ve kısa bir çatışma yaşadık. Lamar, paketleri güvenli bir şekilde almak için benimle birlikte çalıştı, çatışma sırasında koordine olduk ve işleri hallettik. Paketleri aldık, ama Stretch’in çeteye karşı olan düşmanlığı ve kendini kanıtlama çabası, işleri zorlaştırdı. Görevden sonra, eski dostlarımızla suç dünyasında yaşadığımız zorlukları ve ilişkilerimizi daha iyi anladık.",
+            "Chop: Lamar, köpeği Chop’ı bir hedefi takip etmesi için eğitmemizi istedi. Chop, çetenin önemli bir hedefini bulmak için kullanıldı. Chop’ı eğitimden geçirdik ve hedefin peşine düşürmek için hazır hale getirdik. Chop, koku alma yeteneğini kullanarak hedefin izini sürdü. Bu sırada Franklin ve ben, çetenin diğer üyeleriyle çatışmaya girdik ve hedefe ulaşmak için büyük bir çaba sarf ettik. Chop’ın etkili bir şekilde çalışması, görevde bize büyük bir avantaj sağladı. Lamar’ın Chop’a olan sevgisi, görevlerdeki performansını ve bağlılığını daha anlamlı hale getirdi.",
+            "Marriage Counseling: Michael, eşi Amanda ile evlilik sorunlarını çözmek için bir danışmana başvurdu. Bir gün, Amanda’nın alışveriş yaptığı mağazaya geldim ve burada bir dizi kargaşaya yol açtım. Mağazanın içindeki tartışma, Amanda’nın eski erkek arkadaşlarıyla ilgiliydi ve bu durum, Michael’ı daha da sinirlendirdi. Mağazadaki karmaşa sırasında, Michael, Amanda’nın eski ilişkilerini ve problemlerini çözmeye çalıştı. Mağazanın içinde yaşananlar, evlilik ilişkilerindeki çatışmaları ve kişisel problemleri daha iyi anlamamı sağladı.",
+            "Friend Request: Michael, sosyal medya sitesi Facade’in CEO’su Jay Norris ile bir toplantıya katılmak zorundaydı. Norris, Michael’a bir iş teklifinde bulundu. Michael, Norris’un ofisine gidip iş stratejilerini araştırdı. Toplantı sırasında, Norris’un iş dünyasındaki yöntemleri ve sosyal medyanın nasıl kullanılacağını öğrendi. Bu görev, Michael’ın iş dünyasında ne kadar etkili olduğunu ve sosyal medyanın önemini daha iyi anlamamı sağladı.",
+            "The Hotel Assassination: Franklin, Lester Crest tarafından verilen bir suikast görevini üstlendi. Görev, bir oteldeki önemli hedefi ortadan kaldırmayı içeriyordu. Franklin, otelin etrafında dikkatlice dolaşıp hedefin yerini tespit etti. Hedefin konumunu belirledikten sonra, otelin güvenlik önlemlerini aşarak hedefe ulaştı. Hedefi etkisiz hale getirdiğinde, izlerini silerek olay yerinden kaçtı. Bu görev, Franklin’in suikast yeteneklerini ve profesyonelliğini geliştirdi.",
+            "The Ballad of Rocco: Michael, Rocco Pelligrino’nun işlerini sabote ettiğini öğrendi. Rocco, Michael’ın eski iş ortağıydı ve aralarındaki ilişkiler oldukça gergindi. Michael, Rocco’nun ofisine gidip onunla yüzleşti. Ofiste yaşanan bir dizi çatışma ve kavga sırasında, Michael, Rocco’nun çetesiyle karşı karşıya geldi ve işlerin yoluna girmesi için büyük bir mücadele verdi. Bu görev, Michael’ın iş dünyasındaki güç ve etkisini ve eski ilişkileriyle olan dinamikleri ortaya koydu.",
+            "Derailed: Trevor, büyük bir yük trenini soymak için karmaşık bir plan yaptı ve bu planı Michael ve Franklin ile paylaştı. Üçümüz, treni yakalamak için büyük bir dikkatle plan yaptık. Trevor, trenin hareketini kontrol etti ve Michael ile Franklin’in hedefe ulaşmasını sağladı. Treni soyarak büyük bir başarıya imza attık. Bu görev, heyecanlı bir kovalamaca ve çatışma içeriyordu, trenin soygunu sırasında yaşananlar ise oldukça gerilim doluydu."
+        ];
+    
+        for (let i = 0; i < 10; i++) {
+          const button = document.createElement('button');
+          button.classList.add('dot');
+          button.style.left = Math.random() * container.clientWidth + 'px';
+          button.style.top = Math.random() * container.clientHeight + 'px';
+
+          button.id = 'dot-' + (i + 1);
+    
+          // Butona 
+          button.addEventListener('click', () => {
+            console.log('Butona tıklandı:', i);
+            
+            storyContent.textContent = stories[i];
+            const parts = stories[i].split(':');
+            const boldText = `<b>${parts[0]}:</b> ${parts[1]}`;
+
+            animationsDiv.classList.remove('visible');
+
+        setTimeout(() => {
+            storyContent.innerHTML = boldText;
+            animationsDiv.classList.add('visible');
+        }, 10); 
+    });
+    
+          container.appendChild(button);
+ };
+          document.getElementById("hamburger-btn").onclick = function() { 
+             var nav = document.querySelector(".navbar");
+             if (nav.style.display === "flex") {
+                 nav.style.display = "none";
+             } else {
+                 nav.style.display = "flex";
+             }
+};
+      </script>
+      <script src="script.js"></script>
+</body>
+</html>
